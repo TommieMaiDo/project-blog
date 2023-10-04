@@ -2,6 +2,7 @@ import React from "react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 
 import BlogHero from "@/components/BlogHero";
+import CodeSnippet from "@/components/CodeSnippet";
 import styles from "./postSlug.module.css";
 import { loadBlogPost } from "@/helpers/file-helpers";
 import { BLOG_TITLE } from "@/constants";
@@ -18,7 +19,6 @@ export async function generateMetadata({ params }) {
 async function BlogPost({ params }) {
   const postSlug = await loadBlogPost(params.postSlug);
 
-
   return (
     <article className={styles.wrapper}>
       <BlogHero
@@ -26,7 +26,7 @@ async function BlogPost({ params }) {
         publishedOn={postSlug.frontmatter.publishedOn}
       />
       <div className={styles.page}>
-        <MDXRemote source={postSlug.content} />
+        <MDXRemote source={postSlug.content} components={{ pre: CodeSnippet }} />
       </div>
     </article>
   );
